@@ -1,0 +1,169 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class RailwayManagement {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Admin admin = new Admin();
+        Passenger passenger = new Passenger();
+
+        while (true) {
+            System.out.println("\n===== Railway Management System =====");
+            System.out.println("1. Admin Login");
+            System.out.println("2. Passenger Login");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    admin.adminMenu();
+                    break;
+                case 2:
+                    passenger.passengerMenu();
+                    break;
+                case 3:
+                    System.out.println("Thank you for using the Railway Management System!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+}
+
+class Admin {
+    private ArrayList<Train> trainList = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
+
+    void adminMenu() {
+        while (true) {
+            System.out.println("\n===== Admin Menu =====");
+            System.out.println("1. Add Train");
+            System.out.println("2. View All Trains");
+            System.out.println("3. Back to Main Menu");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addTrain();
+                    break;
+                case 2:
+                    viewTrains();
+                    break;
+                case 3:
+                    return;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private void addTrain() {
+        System.out.print("Enter Train Number: ");
+        int trainNo = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        System.out.print("Enter Train Name: ");
+        String trainName = scanner.nextLine();
+        System.out.print("Enter Train Route: ");
+        String trainRoute = scanner.nextLine();
+
+        trainList.add(new Train(trainNo, trainName, trainRoute));
+        System.out.println("Train added successfully!");
+    }
+
+    private void viewTrains() {
+        if (trainList.isEmpty()) {
+            System.out.println("No trains available.");
+        } else {
+            System.out.println("\nAvailable Trains:");
+            for (Train train : trainList) {
+                System.out.println(train);
+            }
+        }
+    }
+}
+
+class Passenger {
+    private ArrayList<Ticket> ticketList = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
+
+    void passengerMenu() {
+        while (true) {
+            System.out.println("\n===== Passenger Menu =====");
+            System.out.println("1. Book Ticket");
+            System.out.println("2. View Bookings");
+            System.out.println("3. Back to Main Menu");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    bookTicket();
+                    break;
+                case 2:
+                    viewBookings();
+                    break;
+                case 3:
+                    return;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private void bookTicket() {
+        System.out.print("Enter Train Number: ");
+        int trainNo = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        System.out.print("Enter Passenger Name: ");
+        String passengerName = scanner.nextLine();
+
+        ticketList.add(new Ticket(trainNo, passengerName));
+        System.out.println("Ticket booked successfully!");
+    }
+
+    private void viewBookings() {
+        if (ticketList.isEmpty()) {
+            System.out.println("No bookings available.");
+        } else {
+            System.out.println("\nYour Bookings:");
+            for (Ticket ticket : ticketList) {
+                System.out.println(ticket);
+            }
+        }
+    }
+}
+
+class Train {
+    private int trainNo;
+    private String trainName;
+    private String trainRoute;
+
+    public Train(int trainNo, String trainName, String trainRoute) {
+        this.trainNo = trainNo;
+        this.trainName = trainName;
+        this.trainRoute = trainRoute;
+    }
+
+    @Override
+    public String toString() {
+        return "Train No: " + trainNo + ", Name: " + trainName + ", Route: " + trainRoute;
+    }
+}
+
+class Ticket {
+    private int trainNo;
+    private String passengerName;
+
+    public Ticket(int trainNo, String passengerName) {
+        this.trainNo = trainNo;
+        this.passengerName = passengerName;
+    }
+
+    @Override
+    public String toString() {
+        return "Train No: " + trainNo + ", Passenger Name: " + passengerName;
+    }
+}
